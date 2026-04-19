@@ -1,0 +1,10 @@
+import "../services/items.service.bow" use fetch_all_items
+
+export fn list_items(req) {    
+    let items = fetch_all_items()
+    return {
+        "status": 200,
+        "body": json_encode({"items": items}),
+        "headers": {"Content-Type": "application/json"}
+    }
+}

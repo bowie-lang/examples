@@ -1,0 +1,10 @@
+import "../services/index.service.bow" use root_snapshot
+
+export fn get_root(req) {
+    let data = root_snapshot(req["path"])
+    return {
+        "status": 200,
+        "body": json_encode(data),
+        "headers": {"Content-Type": "application/json"}
+    }
+}

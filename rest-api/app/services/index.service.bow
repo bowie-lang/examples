@@ -1,0 +1,3 @@
+export fn root_snapshot(path) {
+    return {"message": "Bowie backend", "path": path}
+}

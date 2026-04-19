@@ -1,0 +1,3 @@
+import "app/index.bow" use server
+
+serve(server)

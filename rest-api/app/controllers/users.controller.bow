@@ -1,0 +1,34 @@
+import "../services/users.service.bow" use get_all, get_by_id
+
+export fn get_all_controller(req) {  
+  let users = get_all()
+  
+  if json_decode(users)[0] == null {
+    println("Exiting")
+    exit(-1)
+  }
+  
+  return {
+    "status": 200,
+    "body": users,
+    "headers": {"Content-Type": "application/json"}
+  }
+}
+
+export fn get_by_id_controller(req) {
+  let user = get_by_id(req.query.id)
+  
+  if user == null {
+    return {
+      "status": "404",
+      "body": json_encode({
+        "error": "user not found"
+      })
+    }
+  }
+
+  return {
+    "status": 200,
+    "body": json_encode(user)
+  }
+}

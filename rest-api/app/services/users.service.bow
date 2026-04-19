@@ -1,0 +1,20 @@
+let users = [
+  {
+    "id": 1,
+    "name": "Onur",
+    "surname": "Ravli"
+  },
+  {
+    "id": 2,
+    "name": "David",
+    "surname": "Bowie"
+  },
+]
+
+export fn get_all() {
+  return json_encode(users)
+}
+
+export fn get_by_id(id) {
+  return lookup(users, "id", int(id))
+}

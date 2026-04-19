@@ -1,0 +1,61 @@
+# JSON and string manipulation demo
+
+let data = {
+    "users": [
+        {"id": 1, "name": "Alice", "active": true},
+        {"id": 2, "name": "Bob",   "active": false},
+        {"id": 3, "name": "Carol", "active": true}
+    ],
+    "meta": {"total": 3, "page": 1}
+}
+
+# Encode to JSON string
+let json_str = json_encode(data, true)
+println("Encoded JSON:")
+println(json_str)
+
+# Decode back
+let parsed = json_decode(json_str)
+println("\nDecoded users count:", len(parsed["users"]))
+
+# Filter active users
+let active = []
+for user in parsed["users"] {
+    if user["active"] {
+        push(active, user["name"])
+    }
+}
+println("Active users:", join(active, ", "))
+
+# String operations
+let sentence = "  Hello, Bowie World!  "
+println("\nOriginal: '" + sentence + "'")
+println("Trimmed:  '" + trim(sentence) + "'")
+println("Upper:    '" + upper(trim(sentence)) + "'")
+println("Lower:    '" + lower(trim(sentence)) + "'")
+
+let words = split(trim(sentence), " ")
+println("Words:", words)
+println("Word count:", len(words))
+
+# Replace
+let result = replace(trim(sentence), "Bowie", "Bow")
+println("Replaced:", result)
+
+# Environment variables
+let home = env("HOME")
+if is_null(home) {
+    println("\nHOME is not set")
+} else {
+    println("\nHOME =", home)
+}
+
+# Math
+println("\nMath:")
+println("sqrt(144) =", sqrt(144))
+println("pow(2, 10) =", pow(2, 10))
+println("abs(-42) =", abs(-42))
+println("max(3, 7) =", max(3, 7))
+println("min(3, 7) =", min(3, 7))
+println("floor(3.7) =", floor(3.7))
+println("ceil(3.2) =", ceil(3.2))

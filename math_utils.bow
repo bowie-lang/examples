@@ -1,0 +1,16 @@
+# math_utils.bow — a reusable module
+
+export let PI = 3.14159265358979
+
+export fn add(a, b) { return a + b }
+
+export fn multiply(a, b) { return a * b }
+
+export fn circle_area(r) { return PI * r * r }
+
+export fn factorial(n) {
+    if n <= 1 { return 1 }
+    return n * factorial(n - 1)
+}
+
+let _internal_cache = {}   # not exported

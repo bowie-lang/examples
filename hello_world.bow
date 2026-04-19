@@ -1,0 +1,56 @@
+# Hello World in Bowie
+println("Hello, World!")
+
+# Variables
+let name = "Bowie"
+let version = 1
+let pi = 3.14159
+
+println("Language:", name, "v" + str(version))
+println("Pi is approximately:", pi)
+
+# Functions
+fn greet(who) {
+    return "Hello, " + who + "!"
+}
+
+println(greet("developer"))
+
+# Control flow
+let x = 42
+if x > 100 {
+    println("big number")
+} else if x > 10 {
+    println("medium number:", x)
+} else {
+    println("small number")
+}
+
+# Loops
+let sum = 0
+for i in range(1, 11) {
+    sum = sum + i
+}
+println("Sum 1..10 =", sum)
+
+# Arrays
+let fruits = ["apple", "banana", "cherry"]
+push(fruits, "date")
+println("Fruits:", fruits)
+println("First fruit:", fruits[0])
+println("Count:", len(fruits))
+
+# Hash maps
+let person = {
+    "name": "Alice",
+    "age": 30,
+    "role": "engineer"
+}
+println("Name:", person["name"], "| Age:", person["age"])
+
+# Closures
+fn make_multiplier(n) {
+    return fn(x) { return x * n }
+}
+let triple = make_multiplier(3)
+println("Triple 7 =", triple(7))

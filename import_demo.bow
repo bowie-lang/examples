@@ -1,0 +1,19 @@
+# import as namespace
+import "math_utils.bow" as math
+
+println("PI =", math.PI)
+println("add(3, 4) =", math.add(3, 4))
+println("circle_area(5) =", math.circle_area(5))
+println("factorial(6) =", math.factorial(6))
+
+# import specific names
+import "math_utils.bow" use multiply, factorial
+
+println("\nmultiply(6, 7) =", multiply(6, 7))
+println("factorial(10) =", factorial(10))
+
+# import everything into scope
+import "math_utils.bow"
+
+println("\nPI directly =", PI)
+println("add directly =", add(10, 20))

@@ -1,0 +1,13 @@
+let port = int(env_or("PORT", "4000"))
+
+export let server = create_server(port, fn() {
+  printf("🚀 Server is listening on http://127.0.0.1:%d\n", port)
+})
+
+import "routes/index.route.bow" use mount_index
+import "routes/items.route.bow" use mount_items
+import "routes/users.route.bow" use mount_users
+
+mount_index(server)
+mount_items(server)
+mount_users(server)

@@ -1,0 +1,5 @@
+import "../controllers/items.controller.bow" use list_items
+
+export fn mount_items(server) {
+    route(server, "GET", "/items", list_items)
+}
