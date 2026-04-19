@@ -1,34 +1,57 @@
-import "@/app/services/users.service.bow" use get_all, get_by_id
+import "@/app/services/users.service.bow" use get_all, get_by_id, create
 
-export fn get_all_controller(req) {  
-  let users = get_all()
-  
-  if json_decode(users)[0] == null {
-    println("Exiting")
-    exit(-1)
+export fn get_all_controller(req) {
+  let rows = get_all()
+  if type(rows) == "error" {
+    return {
+      "status": 500,
+      "body": json_encode({"error": str(rows)}),
+      "headers": {"Content-Type": "application/json"}
+    }
   }
-  
   return {
     "status": 200,
-    "body": users,
+    "body": json_encode(rows),
     "headers": {"Content-Type": "application/json"}
   }
 }
 
 export fn get_by_id_controller(req) {
   let user = get_by_id(req.query.id)
-  
-  if user == null {
+  if type(user) == "error" {
     return {
-      "status": "404",
-      "body": json_encode({
-        "error": "user not found"
-      })
+      "status": 500,
+      "body": json_encode({"error": str(user)}),
+      "headers": {"Content-Type": "application/json"}
     }
   }
-
+  if user == null {
+    return {
+      "status": 404,
+      "body": json_encode({"error": "user not found"}),
+      "headers": {"Content-Type": "application/json"}
+    }
+  }
   return {
     "status": 200,
-    "body": json_encode(user)
+    "body": json_encode(user),
+    "headers": {"Content-Type": "application/json"}
+  }
+}
+
+export fn create_user_controller(req) {
+  let body = json_decode(req.body)
+  let user = create(body.name, body.surname)
+  if type(user) == "error" {
+    return {
+      "status": 500,
+      "body": json_encode({"error": str(user)}),
+      "headers": {"Content-Type": "application/json"}
+    }
+  }
+  return {
+    "status": 200,
+    "body": json_encode(user),
+    "headers": {"Content-Type": "application/json"}
   }
 }

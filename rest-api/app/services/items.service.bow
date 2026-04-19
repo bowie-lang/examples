@@ -1,3 +1,5 @@
+import "@/app/db.bow" use db
+
 export fn fetch_all_items() {
-    return ["test", {"a": "b"}]
+  return pg_query(db, "SELECT id::text AS id, label FROM items ORDER BY id")
 }

@@ -1,20 +1,29 @@
-let users = [
-  {
-    "id": 1,
-    "name": "Onur",
-    "surname": "Ravli"
-  },
-  {
-    "id": 2,
-    "name": "David",
-    "surname": "Bowie"
-  },
-]
+import "@/app/db.bow" use db
 
 export fn get_all() {
-  return json_encode(users)
+  return pg_query(db, "SELECT id::text AS id, name, surname FROM users ORDER BY id")
 }
 
 export fn get_by_id(id) {
-  return lookup(users, "id", int(id))
+  if id == null {
+    return null
+  }
+  let sql = sprintf("SELECT id::text AS id, name, surname FROM users WHERE id = %d LIMIT 1", int(id))
+  let rows = pg_query(db, sql)
+  if type(rows) == "error" {
+    return rows
+  }
+  if len(rows) == 0 {
+    return null
+  }
+  return rows[0]
+}
+
+export fn create(name, surname) {
+  let sql = sprintf("INSERT INTO users (name, surname) VALUES ('%s', '%s') RETURNING id::text AS id, name, surname", name, surname)
+  let rows = pg_query(db, sql)
+  if type(rows) == "error" {
+    return rows
+  }
+  return rows[0]
 }

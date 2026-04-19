@@ -1,3 +1,5 @@
+import "db.bow" use db
+
 let port = int(env_or("PORT", "4000"))
 
 export let server = create_server(port, fn() {

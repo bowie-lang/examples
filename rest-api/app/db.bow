@@ -1,0 +1,10 @@
+# Loads before routes (see app/index.bow). Uses DATABASE_URL or a local default.
+let conninfo = env_or("DATABASE_URL", "postgresql://127.0.0.1:5432/postgres")
+export let db = pg_connect(conninfo)
+
+if type(db) == "error" {
+  eprint("PostgreSQL connection failed. Install libpq, run schema.sql, and set DATABASE_URL if needed.\n")
+  eprint(str(db))
+  eprint("\n")
+  exit(1)
+}

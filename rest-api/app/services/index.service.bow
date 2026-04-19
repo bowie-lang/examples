@@ -1,3 +1,13 @@
+import "@/app/db.bow" use db
+
 export fn root_snapshot(path) {
-    return {"message": "Bowie backend", "path": path}
+  let database = "unknown"
+  if type(db) == "pg_conn" {
+    database = "connected"
+  }
+  return {
+    "message": "Bowie backend",
+    "path": path,
+    "database": database
+  }
 }
