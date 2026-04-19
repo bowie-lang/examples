@@ -1,4 +1,4 @@
-import "../controllers/index.controller.bow" use get_root
+import "@/app/controllers/index.controller.bow" use get_root
 
 export fn mount_index(server) {
     route(server, "GET", "/", get_root)

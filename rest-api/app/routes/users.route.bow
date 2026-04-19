@@ -1,4 +1,4 @@
-import "../controllers/users.controller.bow" use get_all_controller, get_by_id_controller
+import "@/app/controllers/users.controller.bow" use get_all_controller, get_by_id_controller
 
 export fn mount_users(server) {
     route(server, "GET", "/users", get_all_controller)

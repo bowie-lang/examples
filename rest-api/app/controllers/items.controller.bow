@@ -1,4 +1,4 @@
-import "../services/items.service.bow" use fetch_all_items
+import "@/app/services/items.service.bow" use fetch_all_items
 
 export fn list_items(req) {    
     let items = fetch_all_items()
