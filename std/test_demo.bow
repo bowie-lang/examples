@@ -1,0 +1,103 @@
+# std/test demo — unit testing framework
+
+import "std/test" use describe, it, expect, run_tests
+import "std/math"  use mean, clamp, round_to
+import "std/array" use map, filter, sum
+
+# ── basic matchers ───────────────────────────────────────────────────────────
+
+describe("expect matchers", fn() {
+    it("to_equal — numbers", fn() {
+        expect(1 + 1).to_equal(2)
+    })
+
+    it("to_equal — strings", fn() {
+        expect("bow" + "ie").to_equal("bowie")
+    })
+
+    it("to_not_equal", fn() {
+        expect(1).to_not_equal(2)
+    })
+
+    it("to_be_true", fn() {
+        expect(5 > 3).to_be_true()
+    })
+
+    it("to_be_false", fn() {
+        expect(1 == 2).to_be_false()
+    })
+
+    it("to_be_null", fn() {
+        expect(null).to_be_null()
+    })
+
+    it("to_contain — string", fn() {
+        expect("hello world").to_contain("world")
+    })
+
+    it("to_contain — array", fn() {
+        expect([1, 2, 3]).to_contain(2)
+    })
+
+    it("to_be_greater_than", fn() {
+        expect(10).to_be_greater_than(5)
+    })
+
+    it("to_be_less_than", fn() {
+        expect(3).to_be_less_than(7)
+    })
+
+    it("to_have_len — array", fn() {
+        expect([10, 20, 30]).to_have_len(3)
+    })
+
+    it("to_have_len — string", fn() {
+        expect("bowie").to_have_len(5)
+    })
+})
+
+# ── testing std/math ─────────────────────────────────────────────────────────
+
+describe("std/math", fn() {
+    it("mean of [1,2,3,4,5] is 3", fn() {
+        expect(mean([1, 2, 3, 4, 5])).to_equal(3)
+    })
+
+    it("clamp keeps value in range", fn() {
+        expect(clamp(15, 0, 10)).to_equal(10)
+        expect(clamp(-5, 0, 10)).to_equal(0)
+        expect(clamp(7, 0, 10)).to_equal(7)
+    })
+
+    it("round_to rounds correctly", fn() {
+        expect(round_to(3.14159, 2)).to_equal(3.14)
+    })
+})
+
+# ── testing std/array ────────────────────────────────────────────────────────
+
+describe("std/array", fn() {
+    it("map doubles values", fn() {
+        let result = map([1, 2, 3], fn(x) { return x * 2 })
+        expect(result).to_equal([2, 4, 6])
+    })
+
+    it("filter keeps evens", fn() {
+        let result = filter([1, 2, 3, 4, 5], fn(x) { return x % 2 == 0 })
+        expect(result).to_equal([2, 4])
+    })
+
+    it("sum of empty array is 0", fn() {
+        expect(sum([])).to_equal(0)
+    })
+})
+
+# ── a failing test to demonstrate error reporting ─────────────────────────────
+
+describe("intentional failure (demo)", fn() {
+    it("this test fails on purpose", fn() {
+        expect(1 + 1).to_equal(3)
+    })
+})
+
+run_tests()
