@@ -1,0 +1,55 @@
+# std/array demo
+
+import "std/array" use map, filter, reduce, find, find_index, every, some,
+    count, flat, flat_map, zip, unique, compact, take, drop, chunk,
+    reverse, sum, product, group_by, sort, sort_by
+
+let nums = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]
+
+# Transform
+println("map x2:    ", map([1, 2, 3, 4, 5], fn(x) { return x * 2 }))
+println("filter even:", filter(nums, fn(x) { return x % 2 == 0 }))
+println("reduce sum: ", reduce(nums, fn(acc, x) { return acc + x }, 0))
+
+# Search
+println("find >5:   ", find(nums, fn(x) { return x > 5 }))
+println("find_index >5:", find_index(nums, fn(x) { return x > 5 }))
+println("every even: ", every([2, 4, 6], fn(x) { return x % 2 == 0 }))
+println("some >8:    ", some(nums, fn(x) { return x > 8 }))
+println("count >4:   ", count(nums, fn(x) { return x > 4 }))
+
+# Shape
+println("flat:      ", flat([[1, 2], [3, [4, 5]], [6]]))
+println("flat_map:  ", flat_map([1, 2, 3], fn(x) { return [x, x * x] }))
+println("zip:       ", zip(["a", "b", "c"], [1, 2, 3]))
+println("unique:    ", unique(nums))
+println("compact:   ", compact([1, null, false, 2, null, 3]))
+
+# Slicing
+println("take 3:    ", take(nums, 3))
+println("drop 7:    ", drop(nums, 7))
+println("chunk 3:   ", chunk([1, 2, 3, 4, 5, 6, 7], 3))
+println("reverse:   ", reverse([1, 2, 3, 4, 5]))
+
+# Aggregation
+println("sum:       ", sum(nums))
+println("product:   ", product([1, 2, 3, 4, 5]))
+
+# Sorting
+println("sort:      ", sort([5, 2, 8, 1, 9, 3]))
+let people = [
+    {"name": "Carol", "age": 28},
+    {"name": "Alice", "age": 34},
+    {"name": "Bob",   "age": 22}
+]
+println("sort_by age:", sort_by(people, fn(p) { return p["age"] }))
+
+# Grouping
+let scores = [
+    {"name": "Alice", "pass": true},
+    {"name": "Bob",   "pass": false},
+    {"name": "Carol", "pass": true}
+]
+let grouped = group_by(scores, fn(s) { return s["pass"] })
+println("group passed:", grouped["true"])
+println("group failed:", grouped["false"])

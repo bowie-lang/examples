@@ -1,0 +1,56 @@
+# std/math demo
+
+import "std/math" use clamp, lerp, round_to, sum, product, mean, median, sign, digits
+
+# Clamp
+println("clamp(15, 0, 10): ", clamp(15, 0, 10))
+println("clamp(-3, 0, 10): ", clamp(-3, 0, 10))
+println("clamp(5, 0, 10):  ", clamp(5, 0, 10))
+
+# Lerp
+println("lerp(0, 100, 0):  ", lerp(0, 100, 0))
+println("lerp(0, 100, 0.5):", lerp(0, 100, 0.5))
+println("lerp(0, 100, 1):  ", lerp(0, 100, 1))
+
+# Rounding
+println("round_to pi 0:    ", round_to(3.14159, 0))
+println("round_to pi 2:    ", round_to(3.14159, 2))
+println("round_to pi 4:    ", round_to(3.14159, 4))
+
+let data = [4, 8, 15, 16, 23, 42]
+
+# Aggregation
+println("sum:              ", sum(data))
+println("product:          ", product([1, 2, 3, 4, 5]))
+println("mean:             ", mean(data))
+println("median (even):    ", median(data))
+println("median (odd):     ", median([3, 1, 4, 1, 5]))
+
+# Sign
+println("sign(-99):        ", sign(-99))
+println("sign(0):          ", sign(0))
+println("sign(42):         ", sign(42))
+
+# Digits
+println("digits(1234):     ", digits(1234))
+println("digits(0):        ", digits(0))
+println("digits(100):      ", digits(100))
+
+# Practical: normalize a list of values to 0..1
+fn normalize(arr) {
+    let lo = arr[0]
+    let hi = arr[0]
+    for x in arr {
+        if x < lo { lo = x }
+        if x > hi { hi = x }
+    }
+    let range = hi - lo
+    if range == 0 { return arr }
+    let result = []
+    let frange = float(range)
+    for x in arr {
+        push(result, round_to(float(x - lo) / frange, 4))
+    }
+    return result
+}
+println("normalized:       ", normalize(data))

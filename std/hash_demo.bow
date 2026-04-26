@@ -1,0 +1,37 @@
+# std/hash demo
+
+import "std/hash" use merge, pick, omit, entries, from_entries,
+    map_values, map_entries, filter_entries, has, size
+
+let user = {"name": "Alice", "age": 34, "role": "admin", "active": true}
+let defaults = {"role": "viewer", "active": false, "theme": "light"}
+
+# Merging
+println("merge (user wins):", merge(defaults, user))
+
+# Subsetting
+println("pick name+role:   ", pick(user, ["name", "role"]))
+println("omit age+active:  ", omit(user, ["age", "active"]))
+
+# Inspection
+println("has 'role':       ", has(user, "role"))
+println("has 'email':      ", has(user, "email"))
+println("size:             ", size(user))
+
+# Entries
+let kvs = entries(user)
+println("entries:          ", kvs)
+println("from_entries:     ", from_entries([["x", 1], ["y", 2], ["z", 3]]))
+
+# Transform
+println("map_values upper: ", map_values({"a": "hello", "b": "world"}, fn(v) { return upper(v) }))
+
+let prices = {"apple": 1.2, "banana": 0.5, "cherry": 3.0}
+println("map_entries:      ", map_entries(prices, fn(k, v) { return [upper(k), v * 100] }))
+println("filter cheap:     ", filter_entries(prices, fn(k, v) { return v < 2.0 }))
+
+# Build config from env-style pairs
+let raw = [["host", "localhost"], ["port", "5432"], ["db", "myapp"]]
+let config = from_entries(raw)
+println("config:           ", config)
+println("host:             ", config["host"])

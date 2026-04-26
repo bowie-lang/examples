@@ -1,0 +1,91 @@
+# std/date demo
+
+import "std/date" use now, today, iso, format, parts, utc_parts,
+    year, month, day, hour, minute, second, weekday, day_of_year,
+    add_seconds, add_minutes, add_hours, add_days, add_weeks,
+    diff_seconds, diff_minutes, diff_hours, diff_days,
+    is_before, is_after, is_same_day,
+    start_of_day, end_of_day, start_of_week,
+    weekday_name, month_name,
+    parse_iso, from_parts,
+    is_today, is_past, is_future, age_in_days
+
+let ts = now()
+
+# Current time
+println("now (unix):      ", ts)
+println("today:           ", today())
+println("iso:             ", iso(ts))
+println("formatted:       ", format(ts, "%A, %B %d %Y %H:%M:%S"))
+
+# Parts
+let p = parts(ts)
+println("year:            ", year(ts))
+println("month:           ", month(ts))
+println("day:             ", day(ts))
+println("hour:            ", hour(ts))
+println("minute:          ", minute(ts))
+println("second:          ", second(ts))
+println("weekday (0=Sun): ", weekday(ts))
+println("weekday name:    ", weekday_name(ts))
+println("month name:      ", month_name(ts))
+println("day of year:     ", day_of_year(ts))
+
+# UTC parts
+let up = utc_parts(ts)
+println("utc hour:        ", up["hour"])
+
+# Arithmetic
+let tomorrow    = add_days(ts, 1)
+let next_week   = add_weeks(ts, 1)
+let in_2h       = add_hours(ts, 2)
+let in_30m      = add_minutes(ts, 30)
+println("tomorrow:        ", iso(tomorrow))
+println("next week:       ", iso(next_week))
+println("in 2 hours:      ", iso(in_2h))
+println("in 30 minutes:   ", iso(in_30m))
+
+# Differences
+println("diff days (week):", diff_days(next_week, ts))
+println("diff hours (2h): ", diff_hours(in_2h, ts))
+println("diff mins (30m): ", diff_minutes(in_30m, ts))
+
+# Comparisons
+println("is_before ts now:", is_before(ts, tomorrow))
+println("is_after tomorrow:", is_after(tomorrow, ts))
+println("same day:        ", is_same_day(ts, ts))
+println("diff day:        ", is_same_day(ts, tomorrow))
+
+# Boundaries
+println("start_of_day:    ", iso(start_of_day(ts)))
+println("end_of_day:      ", iso(end_of_day(ts)))
+println("start_of_week:   ", iso(start_of_week(ts)))
+
+# Parsing
+let d1 = parse_iso("2024-01-15")
+println("parsed date:     ", iso(d1))
+println("year:            ", year(d1))
+
+let d2 = parse_iso("2024-06-20T14:30:00")
+println("parsed datetime: ", iso(d2))
+println("hour:            ", hour(d2))
+
+let d3 = from_parts(2025, 12, 25, 0, 0, 0)
+println("xmas 2025:       ", format(d3, "%A, %B %d %Y"))
+
+# Relative helpers
+println("is_today(now):   ", is_today(ts))
+println("is_past(2024):   ", is_past(parse_iso("2024-01-01")))
+println("is_future(now+1):", is_future(tomorrow))
+println("age_in_days(2024-01-01):", age_in_days(parse_iso("2024-01-01")))
+
+# Practical: event countdown
+fn days_until(date_str) {
+    let target = parse_iso(date_str)
+    let d = diff_days(target, now())
+    if d < 0 { return "already passed (" + str(abs(d)) + " days ago)" }
+    if d == 0 { return "today!" }
+    return str(d) + " days away"
+}
+println("2026-01-01:      ", days_until("2026-01-01"))
+println("2099-12-31:      ", days_until("2099-12-31"))

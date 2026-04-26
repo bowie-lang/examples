@@ -1,0 +1,56 @@
+# std/string demo
+
+import "std/string" use pad_left, pad_right, repeat, truncate, lines,
+    words, capitalize, title_case, count_chars, is_blank, indent
+
+# Padding
+println("pad_left  '42' to 6:", pad_left("42", 6, "0"))
+println("pad_right 'hi' to 8:", pad_right("hi", 8, "."))
+println("pad_left  default:  ", pad_left("x", 5, null))
+
+# Repeat
+println("repeat '-' x20:    ", repeat("-", 20))
+println("repeat 'ab' x4:    ", repeat("ab", 4))
+
+# Truncate
+let long_str = "The quick brown fox jumps over the lazy dog"
+println("truncate 20:       ", truncate(long_str, 20, "..."))
+println("truncate 50 (noop):", truncate(long_str, 50, "..."))
+
+# Split helpers
+let text = "line one\nline two\nline three"
+println("lines:             ", lines(text))
+
+let sentence = "  The   quick   brown   fox  "
+println("words:             ", words(sentence))
+
+# Case
+println("capitalize:        ", capitalize("hello world"))
+println("title_case:        ", title_case("the quick brown fox"))
+
+# Counting / detection
+println("count 'l' in hello:", count_chars("hello world", "l"))
+println("is_blank '   ':    ", is_blank("   "))
+println("is_blank 'hi':     ", is_blank("hi"))
+
+# Indent
+let code = "fn greet(name) {\n    println(name)\n}"
+println("indent 4:\n", indent(code, 4))
+
+# Practical: build a simple table
+let headers = ["Name", "Age", "Role"]
+let row = ["Alice", "34", "admin"]
+let col_w = 12
+
+let header_line = ""
+let row_line = ""
+for h in headers {
+    header_line = header_line + pad_right(h, col_w, " ")
+}
+for cell in row {
+    row_line = row_line + pad_right(cell, col_w, " ")
+}
+println(repeat("-", col_w * len(headers)))
+println(header_line)
+println(repeat("-", col_w * len(headers)))
+println(row_line)
