@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    li.done { text-decoration: line-through; color: #888; }
+    .empty { color: #aaa; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  {{#todos}}
+  <ul>
+    {{#items}}
+    <li class="{{#done}}done{{/done}}">{{title}}</li>
+    {{/items}}
+    {{^items}}
+    <li class="empty">No todos yet.</li>
+    {{/items}}
+  </ul>
+  {{/todos}}
+</body>
+</html>

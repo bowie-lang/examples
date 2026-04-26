@@ -1,0 +1,40 @@
+# Mustache template rendering demo
+
+# render_template: inline template string
+let greeting = render_template("Hello, {{name}}! You have {{count}} messages.", {
+    "name": "Alice",
+    "count": 5
+})
+println(greeting)
+
+# Sections: render block when truthy
+let with_items = render_template("Items:{{#items}} [{{.}}]{{/items}}", {
+    "items": ["apple", "banana", "cherry"]
+})
+println(with_items)
+
+# Inverted sections: render block when falsy / empty
+let empty_list = render_template(
+    "{{^items}}No items found.{{/items}}{{#items}}{{.}}{{/items}}",
+    {"items": []}
+)
+println(empty_list)
+
+# Nested hash access via dot notation
+let profile = render_template("{{user.name}} ({{user.role}})", {
+    "user": {"name": "Bob", "role": "admin"}
+})
+println(profile)
+
+# HTML escaping: {{var}} escapes, {{{var}}} does not
+let safe = render_template("Escaped: {{raw}} | Unescaped: {{{raw}}}", {
+    "raw": "<b>bold</b>"
+})
+println(safe)
+
+# render_file: load template from disk
+let page = render_file("views/index.html", {
+    "title": "Bowie Templates",
+    "description": "Mustache rendering built right into the language."
+})
+println(page)
